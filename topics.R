@@ -121,7 +121,7 @@ optimum_k_stm <- as.numeric(stm_search$results$K[which.min(stm_search$results$re
 
 ## optimal k using harmonic mean of log likelihood
 
-source(eval(parse(text = paste0('"https://',Sys.getenv("USERPWD"),'@bitbucket.csiro.au/projects/NA/repos/coauthor/raw/optimal_k.R"'))))
+source("https://raw.githubusercontent.com/aterhorst/mars_bibliometrics/main/optimal_k.R")
 
 opti_k1 <- optimal_k(unigram_dtm)
 opti_k1
