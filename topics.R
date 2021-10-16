@@ -15,7 +15,7 @@ require(tidytext)
 require(pluralize)
 require(topicmodels)
 
-load("~/owncloud/terrestrial analogues/data/scopus_search.RData")
+load("~/onedrive - csiro/projects/mars_analogue/data/scopus_search.RData")
 
 
 
