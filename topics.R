@@ -86,7 +86,9 @@ unigram_dtm <- unigram %>%
   count(scopus_id, word) %>%
   cast_dtm(scopus_id, word, n)
 
-# lda tuning
+#  optimal k
+
+## lda tuning
 
 how_many_topics <- ldatuning::FindTopicsNumber(unigram_dtm,
                                                topics = c(seq(2, 20, 2), seq(25, 50, 5), seq(60, 90, 10)),
@@ -97,6 +99,35 @@ how_many_topics <- ldatuning::FindTopicsNumber(unigram_dtm,
                                                verbose = F)
 
 ldatuning::FindTopicsNumber_plot(how_many_topics)
+
+## optimal k using stm
+
+require(stm)
+
+corpus_stm <- readCorpus(unigram_dtm, type = "slam" )
+
+set.seed(1234)
+
+stm_search <- searchK(documents = corpus_stm$documents,
+                      vocab = corpus_stm$vocab,
+                      K = seq(20,80,10),
+                      cores = 4,
+                      init.type = "Spectral",
+                      data = corpus_stm$meta)
+
+plot(stm_search)
+
+optimum_k_stm <- as.numeric(stm_search$results$K[which.min(stm_search$results$residual)])
+
+## optimal k using harmonic mean of log likelihood
+
+source(eval(parse(text = paste0('"https://',Sys.getenv("USERPWD"),'@bitbucket.csiro.au/projects/NA/repos/coauthor/raw/optimal_k.R"'))))
+
+opti_k1 <- optimal_k(unigram_dtm)
+opti_k1
+
+optimum_k_rinker <- as.numeric(str_extract(opti_k1, "[0-9][0-9]"))
+
 
 
 # run topic model
