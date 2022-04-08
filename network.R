@@ -20,7 +20,8 @@ lone_authors <- authors %>%
   group_by(scopus_id) %>%
   count() %>%
   filter(n < 2) %>%
-  select(scopus_id)
+  select(scopus_id) %>%
+  ungroup()
 
 node_list <- author_list %>%
   left_join(author_attributes) %>%
@@ -41,7 +42,7 @@ edge_list <- authors %>%
   distinct(scopus_id, author_id) %>%
   anti_join(lone_authors) %>%
   group_by(scopus_id) %>%
-  expand(scopus_id, from = author_id, to = author_id) %>% 
+  expand(from = author_id, to = author_id) %>% 
   filter(from < to) %>%
   ungroup() 
 
@@ -77,19 +78,87 @@ node_data <- as_tibble(net %>% activate(nodes)) %>%
 
 # plot graph
 
-k <- ggraph(net %>% filter(group < 11), layout = "kk") + 
+k1 <- ggraph(net %>% filter(group == 1), layout = "stress") + 
   geom_edge_link(aes(width = n), color = "grey") +
   scale_edge_width(range = c(0.5, 2), breaks = c(seq(1, 10, 2)), name = "No. of collaborations") +
   scale_size(range = c(2,10)) +
   geom_node_point(aes(size = betweenness, color = country, alpha = h_index)) +
-  geom_node_text(aes(label = author), size = 2, nudge_y = 0.25) +
-  geom_mark_hull(aes(x, y, group = group, label = group), concavity = 30, expand = unit(5, "mm"), alpha = 0.01) +
+  geom_node_text(aes(label = author), size = 3, nudge_y = 0.15) +
+  # geom_mark_hull(aes(x, y, group = group, label = group), concavity = 30, expand = unit(5, "mm"), alpha = 0.01) +
   
-  scale_fill_continuous(guide = FALSE) +
+  scale_fill_continuous(guide = "none") +
   labs(color = "Country", alpha = "h-index", size = "Betweenness centrality") +
+  guides(size = guide_legend(order = 4), colour = guide_legend(order = 1), alpha = guide_legend(order = 2), width = guide_legend(order = 3)) + 
+  
+  
   theme_graph() 
 
-ggsave("~/onedrive - csiro/projects/mars_analogue/plots/mars_analog.png", k, width = 40, height = 30, units = "cm")
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_1.png", k1, width = 40, height = 30, units = "cm")
+
+k2 <- ggraph(net %>% filter(group == 2), layout = "stress") + 
+  geom_edge_link(aes(width = n), color = "grey") +
+  scale_edge_width(range = c(0.5, 2), breaks = c(seq(1, 10, 2)), name = "No. of collaborations") +
+  scale_size(range = c(2,10)) +
+  geom_node_point(aes(size = betweenness, color = country, alpha = h_index)) +
+  geom_node_text(aes(label = author), size = 3, nudge_y = 0.15) +
+  # geom_mark_hull(aes(x, y, group = group, label = group), concavity = 30, expand = unit(5, "mm"), alpha = 0.01) +
+  
+  scale_fill_continuous(guide = "none") +
+  labs(color = "Country", alpha = "h-index", size = "Betweenness centrality") +
+  guides(size = guide_legend(order = 4), colour = guide_legend(order = 1), alpha = guide_legend(order = 2), width = guide_legend(order = 3)) + 
+  
+  theme_graph() 
+
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_2.png", k2, width = 40, height = 30, units = "cm")
+
+k3 <- ggraph(net %>% filter(group == 3), layout = "stress") + 
+  geom_edge_link(aes(width = n), color = "grey") +
+  scale_edge_width(range = c(0.5, 2), breaks = c(seq(1, 10, 2)), name = "No. of collaborations") +
+  scale_size(range = c(2,10)) +
+  geom_node_point(aes(size = betweenness, color = country, alpha = h_index)) +
+  geom_node_text(aes(label = author), size = 3, nudge_y = 0.15) +
+  # geom_mark_hull(aes(x, y, group = group, label = group), concavity = 30, expand = unit(5, "mm"), alpha = 0.01) +
+  
+  scale_fill_continuous(guide = "none") +
+  labs(color = "Country", alpha = "h-index", size = "Betweenness centrality") +
+  guides(size = guide_legend(order = 4), colour = guide_legend(order = 1), alpha = guide_legend(order = 2), width = guide_legend(order = 3)) + 
+  
+  theme_graph() 
+
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_3.png", k3, width = 40, height = 30, units = "cm")
+
+k4 <- ggraph(net %>% filter(group == 4), layout = "stress") + 
+  geom_edge_link(aes(width = n), color = "grey") +
+  scale_edge_width(range = c(0.5, 2), breaks = c(seq(1, 10, 2)), name = "No. of collaborations") +
+  scale_size(range = c(2,10)) +
+  geom_node_point(aes(size = betweenness, color = country, alpha = h_index)) +
+  geom_node_text(aes(label = author), size = 3, nudge_y = 0.1) +
+  # geom_mark_hull(aes(x, y, group = group, label = group), concavity = 30, expand = unit(5, "mm"), alpha = 0.01) +
+  
+  scale_fill_continuous(guide = "none") +
+  labs(color = "Country", alpha = "h-index", size = "Betweenness centrality") +
+  guides(size = guide_legend(order = 4), colour = guide_legend(order = 1), alpha = guide_legend(order = 2), width = guide_legend(order = 3)) + 
+  
+  theme_graph() 
+
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_4.png", k4, width = 40, height = 30, units = "cm")
+
+k5 <- ggraph(net %>% filter(group == 5), layout = "stress") + 
+  geom_edge_link(aes(width = n), color = "grey") +
+  scale_edge_width(range = c(0.5, 2), breaks = c(seq(1, 10, 2)), name = "No. of collaborations") +
+  scale_size(range = c(2,10)) +
+  geom_node_point(aes(size = betweenness, color = country, alpha = h_index)) +
+  geom_node_text(aes(label = author), size = 3, nudge_y = 0.1) +
+  # geom_mark_hull(aes(x, y, group = group, label = group), concavity = 30, expand = unit(5, "mm"), alpha = 0.01) +
+  
+  scale_fill_continuous(guide = "none") +
+  labs(color = "Country", alpha = "h-index", size = "Betweenness centrality") +
+  guides(size = guide_legend(order = 4), colour = guide_legend(order = 1), alpha = guide_legend(order = 2), width = guide_legend(order = 3)) + 
+  
+  theme_graph() 
+
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_5.png", k5, width = 40, height = 30, units = "cm")
+
 
 save(node_list,
      edge_list,
