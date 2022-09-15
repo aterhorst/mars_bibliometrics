@@ -93,7 +93,7 @@ k1 <- ggraph(net %>% filter(group == 1), layout = "stress") +
   
   theme_graph() 
 
-ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_1.png", k1, width = 40, height = 30, units = "cm")
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_1.pdf", k1, width = 294, height = 210, units = "mm", device = cairo_pdf)
 
 k2 <- ggraph(net %>% filter(group == 2), layout = "stress") + 
   geom_edge_link(aes(width = n), color = "grey") +
@@ -109,7 +109,7 @@ k2 <- ggraph(net %>% filter(group == 2), layout = "stress") +
   
   theme_graph() 
 
-ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_2.png", k2, width = 40, height = 30, units = "cm")
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_2.pdf", k2, width = 40, height = 30, units = "cm", device = cairo_pdf)
 
 k3 <- ggraph(net %>% filter(group == 3), layout = "stress") + 
   geom_edge_link(aes(width = n), color = "grey") +
@@ -125,7 +125,7 @@ k3 <- ggraph(net %>% filter(group == 3), layout = "stress") +
   
   theme_graph() 
 
-ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_3.png", k3, width = 40, height = 30, units = "cm")
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_3.pdf", k3, width = 40, height = 30, units = "cm", device = cairo_pdf)
 
 k4 <- ggraph(net %>% filter(group == 4), layout = "stress") + 
   geom_edge_link(aes(width = n), color = "grey") +
@@ -141,7 +141,7 @@ k4 <- ggraph(net %>% filter(group == 4), layout = "stress") +
   
   theme_graph() 
 
-ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_4.png", k4, width = 40, height = 30, units = "cm")
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_4.pdf", k4, width = 40, height = 30, units = "cm", device = cairo_pdf)
 
 k5 <- ggraph(net %>% filter(group == 5), layout = "stress") + 
   geom_edge_link(aes(width = n), color = "grey") +
@@ -157,7 +157,7 @@ k5 <- ggraph(net %>% filter(group == 5), layout = "stress") +
   
   theme_graph() 
 
-ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_5.png", k5, width = 40, height = 30, units = "cm")
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/cluster_5.pdf", k5, width = 40, height = 30, units = "cm", device = cairo_pdf)
 
 
 save(node_list,

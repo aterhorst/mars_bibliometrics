@@ -8,6 +8,7 @@ require(tidyverse)
 require(tidyr)
 require(xtable)
 library(RColorBrewer)
+require(ggsci)
 
 
 load("~/onedrive - csiro/projects/mars_analogue/data/topic_model_results.RData")
@@ -153,9 +154,12 @@ write_csv(corpus_gamma %>%
 
 # proportion of multinational papers
 
+author_affil <- author_attributes %>%
+  left_join(affiliation_info)
+
 p <- authors %>%
   select(scopus_id, author_id) %>%
-  left_join(node_data %>% select(-c(author, citations, publications))) %>%
+  left_join(author_affil) %>%
   distinct(scopus_id, country) %>%
   group_by(scopus_id) %>%
   mutate(mix = n()) %>%
@@ -169,12 +173,15 @@ p <- authors %>%
   coord_flip() +
   scale_x_discrete("top 20 countries") +
   scale_y_continuous("number of articles") +
+  
   labs(fill = "") +
   theme(legend.position = "bottom") +
-  scale_fill_discrete(guide = guide_legend(reverse = TRUE),
-                      labels = c("articles with authors from multiple countries","articles with authors from same country"))
+  scale_fill_lancet(guide = guide_legend(reverse = TRUE),
+                 labels = c("articles with authors from multiple countries","articles with authors from same country"))
+  #scale_fill_discrete(guide = guide_legend(reverse = TRUE),
+  #                    labels = c("articles with authors from multiple countries","articles with authors from same country"))
 
 
-ggsave("~/onedrive - csiro/projects/mars_analogue/plots/top_countries.pdf", p, width = 18, height = 12, units = "cm")
+ggsave("~/onedrive - csiro/projects/mars_analogue/plots/Fig_6.pdf", p, width = 18, height = 12, units = "cm")
 
 #--------- end script ---------#
